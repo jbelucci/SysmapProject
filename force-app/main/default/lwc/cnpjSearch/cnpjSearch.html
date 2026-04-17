@@ -1,0 +1,176 @@
+<template>
+    <lightning-card title="Cadastro de Cliente Corporativo" icon-name="standard:account">
+        
+        <!-- Estado 1: Input do CNPJ -->
+        <div class="slds-p-around_medium">
+            <lightning-input
+                label="CNPJ"
+                value={cnpj}
+                onchange={handleCnpjChange}
+                placeholder="00.000.000/0000-00"
+                maxlength="18"
+                disabled={isLoading}>
+            </lightning-input>
+
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    label="Buscar"
+                    variant="brand"
+                    onclick={handleBuscar}
+                    disabled={isLoading}>
+                </lightning-button>
+
+                <template if:true={mostrarFormulario}>
+                    <lightning-button
+                        label="Limpar"
+                        variant="neutral"
+                        onclick={handleLimpar}
+                        class="slds-m-left_small"
+                        disabled={isLoading}>
+                    </lightning-button>
+                </template>
+            </div>
+
+            <!-- Spinner de loading -->
+            <template if:true={isLoading}>
+                <div class="slds-m-top_medium">
+                    <lightning-spinner alternative-text="Consultando CNPJ..." size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Alerta de empresa existente -->
+            <template if:true={registroExistente}>
+                <div class="slds-m-top_medium">
+                    <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+                        <span class="slds-assistive-text">warning</span>
+                        <h2>Empresa ja cadastrada no Salesforce. Atualize os dados abaixo se necessario.</h2>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Formulario com dados da empresa -->
+            <template if:true={mostrarFormulario}>
+                <div class="slds-m-top_large">
+                    <template if:true={exibirMensagemOrigem}>
+                        <div class="slds-m-bottom_small">
+                            <div class="slds-notify slds-notify_alert slds-alert_info" role="alert">
+                                <span class="slds-assistive-text">info</span>
+                                <h2>{mensagemOrigem}</h2>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template if:true={exibirMensagemUltimaAtualizacao}>
+                        <div class="slds-m-bottom_medium">
+                            <div class="slds-box slds-theme_default">
+                                <p class="slds-text-body_small">{mensagemUltimaAtualizacao}</p>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="slds-grid slds-gutters slds-wrap">
+
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input
+                                label="Razao Social"
+                                value={dadosEmpresa.nome}
+                                onchange={handleFieldChange}
+                                data-field="nome">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input
+                                label="CNPJ"
+                                value={dadosEmpresa.cnpj}
+                                disabled>
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-m-top_small">
+                            <lightning-textarea
+                                label="Logradouro"
+                                value={dadosEmpresa.logradouro}
+                                onchange={handleFieldChange}
+                                data-field="logradouro"
+                                max-length="255">
+                            </lightning-textarea>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-3 slds-m-top_small">
+                            <lightning-input
+                                label="Municipio"
+                                value={dadosEmpresa.municipio}
+                                onchange={handleFieldChange}
+                                data-field="municipio">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-3 slds-m-top_small">
+                            <lightning-input
+                                label="UF"
+                                value={dadosEmpresa.uf}
+                                onchange={handleFieldChange}
+                                data-field="uf">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-3 slds-m-top_small">
+                            <lightning-input
+                                label="CEP"
+                                value={dadosEmpresa.cep}
+                                onchange={handleFieldChange}
+                                data-field="cep">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2 slds-m-top_small">
+                            <lightning-input
+                                label="Telefone"
+                                value={dadosEmpresa.telefone}
+                                onchange={handleFieldChange}
+                                data-field="telefone">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2 slds-m-top_small">
+                            <lightning-input
+                                label="Situacao Cadastral"
+                                value={dadosEmpresa.situacao}
+                                disabled>
+                            </lightning-input>
+                        </div>
+
+                    </div>
+
+                    <!-- Botoes de acao -->
+                    <div class="slds-m-top_large">
+                        <lightning-button
+                            label={labelBotaoSalvar}
+                            variant="brand"
+                            onclick={handleSalvar}
+                            disabled={isLoading}>
+                        </lightning-button>
+
+                        <lightning-button
+                            label={labelBotaoSalvarENovo}
+                            variant="success"
+                            onclick={handleSalvarENovo}
+                            disabled={isLoading}
+                            class="slds-m-left_small">
+                        </lightning-button>
+                    </div>
+
+                    <!-- Contador de cadastros -->
+                    <div class="slds-m-top_small">
+                        <p class="slds-text-color_success">
+                            Empresas cadastradas nesta sessao: {contadorCadastros}
+                        </p>
+                    </div>
+
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
