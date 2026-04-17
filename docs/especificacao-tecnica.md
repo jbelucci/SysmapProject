@@ -1,4 +1,4 @@
-﻿# Especificação Técnica - Cadastro de Cliente Corporativo
+# Especificação Técnica - Cadastro de Cliente Corporativo
 
 ## 1. Objetivo
 Este documento descreve a solução implementada para o processo de cadastro e atualização de clientes corporativos no Salesforce, com consulta de CNPJ na API ReceitaWS, preenchimento automático dos dados da empresa, controle de acesso por perfil e permission set e experiência principal em Lightning Web Component (LWC).
@@ -141,8 +141,10 @@ O Screen Flow foi mantido ativo como parte da automação exigida pelo projeto.
 - A experiência principal foi mantida no LWC para melhorar usabilidade, responsividade e clareza das mensagens.
 - O Screen Flow foi implementado para atender ao requisito de automação do projeto.
 
-## 12. Evidências da Implementação
-As evidências utilizadas para demonstrar a implementação contemplam:
+## 12. Uso de Inteligência Artificial
+A Inteligência Artificial foi utilizada como apoio pontual ao longo do desenvolvimento, principalmente para correção de erros, esclarecimento de dúvidas técnicas, revisão de trechos de código e apoio na organização da documentação. A utilização desse recurso não substituiu a validação prática da solução na org Salesforce. As decisões finais de arquitetura, os ajustes realizados na interface, a configuração da org, os testes executados e a validação funcional do projeto foram conduzidos com base no comportamento real da implementação.
+
+## 13. Evidências da ImplementaçãoAs evidências utilizadas para demonstrar a implementação contemplam:
 - app principal `Cadastro de Cliente Corporativo`
 - tela inicial do LWC `cnpjSearch`
 - consulta de CNPJ não cadastrado
